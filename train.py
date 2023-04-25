@@ -108,6 +108,9 @@ def main_worker(device, world_size, args):
 
     trainer.train(args.epochs)
     torch.save(model.state_dict(), args.name+".model")
+    torch.save(model.state_dict(), args.name+".pth")
+    torch.save(model, args.name+".pt")
+    torch.save(model, args.name+".h5")
 
 if __name__ == '__main__':
     main()
