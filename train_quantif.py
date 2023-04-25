@@ -54,7 +54,7 @@ def maxWeight(weight):
 
 def quantifier(w, n_bit):
     maxi=maxWeight(w)
-    w = weight.clone().cuda()
+    w = w.clone().cuda()
     a = w.shape
     v = torch.zeros(a)
     v = v + pow(2, n_bit-1 + maxi)
@@ -207,7 +207,7 @@ if __name__ == '__main__':
         scheduler = ReduceLROnPlateau(optimizer, factor=args.gamma, patience=args.patience, min_lr=args.min_lr)
         # scheduler = StepLR(optimizer, 100, gamma=0.1)
     elif args.optimizer=="adam":
-        optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+        optimizer = optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
 
     try:
         os.mkdir("logs")
@@ -288,4 +288,8 @@ if __name__ == '__main__':
 
         logger.log()
 
-    model.save(args.name+".model")
+    torch.save(model.state_dict(), args.name+".model")
+    torch.save(model.state_dict(), args.name+".pth")
+    torch.save(model, args.name+".pt")
+    torch.save(model, args.name+".h5")
+
